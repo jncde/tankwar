@@ -1,4 +1,6 @@
+import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -26,7 +28,16 @@ public class TankClient extends Frame {
     });
     this.setTitle ("Tank War");
     this.setResizable (false);
+    this.setBackground (Color.GREEN);
     setVisible (true);
   }
 
+  @Override
+  public void paint (Graphics g) {
+    Color color = g.getColor ();
+    g.setColor (Color.RED);
+    g.fillOval (50, 50, 30, 30);
+    g.setColor (color);
+
+  }
 }
