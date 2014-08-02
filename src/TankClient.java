@@ -24,6 +24,7 @@ public class TankClient extends Frame {
       }
 
     });
+    this.setTitle ("Tank War");
     this.setResizable (false);
     setVisible (true);
   }
