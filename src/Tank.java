@@ -134,12 +134,7 @@ public class Tank {
       case KeyEvent.VK_DOWN:
         bD = true;
         break;
-      case KeyEvent.VK_CONTROL:
-        tankClient.m = fire ();
-        break;
 
-      default:
-        break;
     }
 
     locateDirection ();
@@ -181,6 +176,9 @@ public class Tank {
       case KeyEvent.VK_DOWN:
         bD = false;
         break;
+      case KeyEvent.VK_CONTROL:
+        fire ();
+        break;
 
       default:
         break;
@@ -193,6 +191,7 @@ public class Tank {
     int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
     int y = this.y + Tank.HEIGHT / 2 - Missile.HEIGHT / 2;
     Missile m = new Missile (x, y, ptDir);
+    tankClient.missiles.add (m);
     return m;
   }
 }
