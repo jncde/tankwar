@@ -1,20 +1,23 @@
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankClient extends Frame {
 
-  int x = 50;
-  int y = 50;
+  int   x              = 50;
+  int   y              = 50;
+
+  Image offScreenImage = null;
 
   public static void main (String[] args) {
 
     TankClient tankClient = new TankClient ();
     tankClient.lauchFrame ();
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1000; i++) {
       System.out.println ("Main print----- " + i);
     }
 
@@ -50,6 +53,22 @@ public class TankClient extends Frame {
     y += 5;
   }
 
+  @Override
+  public void update (Graphics g) {
+    if (offScreenImage == null) {
+      offScreenImage = this.createImage (800, 600);
+    }
+    Graphics offG = offScreenImage.getGraphics ();
+    Color c = offG.getColor ();
+    offG.setColor (Color.GREEN);
+    offG.fillRect (0, 0, 800, 600);
+    offG.setColor (c);
+    paint (offG);
+
+    g.drawImage (offScreenImage, 0, 0, null);
+
+  }
+
   private class PaintThread implements Runnable {
 
     @Override
@@ -59,7 +78,7 @@ public class TankClient extends Frame {
         System.out.println ("PaintThread print-----y: " + y);
         repaint ();
         try {
-          Thread.sleep (100);
+          Thread.sleep (50);
         } catch (InterruptedException e) {
           e.printStackTrace ();
         }
