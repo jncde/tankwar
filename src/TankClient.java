@@ -98,6 +98,11 @@ public class TankClient extends Frame {
 
     }
 
+    @Override
+    public void keyReleased (KeyEvent e) {
+      myTank.keyReleased (e);
+    }
+
   }
 
 }
