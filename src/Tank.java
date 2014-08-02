@@ -4,13 +4,24 @@ import java.awt.event.KeyEvent;
 
 public class Tank {
 
-  public static final int XSPEED = 5;
-  public static final int YSPEED = 5;
+  private static final int HEIGHT = 30;
+  private static final int WIDTH  = 30;
+  public static final int  XSPEED = 5;
+  public static final int  YSPEED = 5;
 
-  private int             x, y;
-  private boolean         bL     = false, bR = false, bU = false, bD = false;
+  private int              x, y;
+  private boolean          bL     = false, bR = false, bU = false, bD = false;
 
-  enum Direction {
+  private TankClient       tankClient;
+
+  public Tank (int x,
+               int y,
+               TankClient tankClient) {
+    this (x, y);
+    this.tankClient = tankClient;
+  }
+
+  public enum Direction {
     L,
     LU,
     U,
@@ -33,7 +44,7 @@ public class Tank {
   public void draw (Graphics g) {
     Color color = g.getColor ();
     g.setColor (Color.RED);
-    g.fillOval (x, y, 30, 30);
+    g.fillOval (x, y, WIDTH, HEIGHT);
     g.setColor (color);
     move ();
   }
@@ -89,6 +100,9 @@ public class Tank {
       case KeyEvent.VK_DOWN:
         bD = true;
         break;
+      case KeyEvent.VK_CONTROL:
+        tankClient.m = fire ();
+        break;
 
       default:
         break;
@@ -141,4 +155,10 @@ public class Tank {
     locateDirection ();
   }
 
+  public Missile fire () {
+    int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
+    int y = this.y + Tank.HEIGHT / 2 - Missile.HEIGHT / 2;
+    Missile m = new Missile (x, y, dir);
+    return m;
+  }
 }

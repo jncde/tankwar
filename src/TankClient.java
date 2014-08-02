@@ -12,7 +12,8 @@ public class TankClient extends Frame {
   private static final int HEIGHT         = 600;
   private static final int WIDTH          = 800;
 
-  Tank                     myTank         = new Tank (50, 50);
+  Tank                     myTank         = new Tank (50, 50, this);
+  Missile                  m              = null;
 
   Image                    offScreenImage = null;
 
@@ -52,6 +53,9 @@ public class TankClient extends Frame {
   public void paint (Graphics g) {
 
     myTank.draw (g);
+    if (m != null) {
+      m.draw (g);
+    }
 
   }
 
