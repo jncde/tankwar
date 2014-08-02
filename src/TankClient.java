@@ -7,10 +7,12 @@ import java.awt.event.WindowEvent;
 
 public class TankClient extends Frame {
 
-  int   x              = 50;
-  int   y              = 50;
+  private static final int HEIGHT         = 600;
+  private static final int WIDTH          = 800;
+  int                      x              = 50;
+  int                      y              = 50;
 
-  Image offScreenImage = null;
+  Image                    offScreenImage = null;
 
   public static void main (String[] args) {
 
@@ -56,12 +58,12 @@ public class TankClient extends Frame {
   @Override
   public void update (Graphics g) {
     if (offScreenImage == null) {
-      offScreenImage = this.createImage (800, 600);
+      offScreenImage = this.createImage (WIDTH, HEIGHT);
     }
     Graphics offG = offScreenImage.getGraphics ();
     Color c = offG.getColor ();
     offG.setColor (Color.GREEN);
-    offG.fillRect (0, 0, 800, 600);
+    offG.fillRect (0, 0, WIDTH, HEIGHT);
     offG.setColor (c);
     paint (offG);
 
