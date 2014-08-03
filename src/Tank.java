@@ -125,6 +125,8 @@ public class Tank {
         x -= XSPEED;
         y += YSPEED;
         break;
+      case STOP:
+        break;
 
     }
 
@@ -185,6 +187,8 @@ public class Tank {
       dir = Direction.D;
     } else if (bL && !bU && !bR && bD) {
       dir = Direction.LD;
+    } else if (!bL && !bU && !bR && !bD) {
+      dir = Direction.STOP;
     }
   }
 
