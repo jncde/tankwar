@@ -18,8 +18,7 @@ public class TankClient extends Frame {
   public static final int   GAME_HEIGHT      = 600;
   public static final int   GAME_WIDTH       = 800;
 
-  Tank                      myTank           = new Tank (50, 50, true, this);
-  Tank                      enemyTank        = new Tank (50, 50, false, this);
+  Tank                      myTank           = new Tank (50, 50, true, Tank.Direction.STOP, this);
   List<Missile>             missiles         = new ArrayList<Missile> ();
   List<Explode>             explodes         = new ArrayList<Explode> ();
   List<Tank>                enemies          = new ArrayList<Tank> ();
@@ -52,7 +51,7 @@ public class TankClient extends Frame {
     this.addKeyListener (new KeyMonitor ());
 
     for (int i = 0; i < 50; i++) {
-      enemies.add (new Tank (50 + i * 10, 50 + i * 10, false, this));
+      enemies.add (new Tank (50 + i * 10, 50 + i * 10, false, Tank.Direction.D, this));
 
     }
     setVisible (true);
@@ -76,6 +75,7 @@ public class TankClient extends Frame {
       missile.draw (g);
       //      missile.hitTank (enemyTank);
       missile.hitTanks (enemies);
+      missile.hitTank (myTank);
 
     }
 
