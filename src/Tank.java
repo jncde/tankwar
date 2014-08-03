@@ -289,6 +289,32 @@ public class Tank {
 
   }
 
+  public boolean collidesWithTanks (List<Tank> tanks) {
+
+    if (!this.live) {
+      return false;
+    }
+    for (Tank tank: tanks) {
+      if (tank != this) {
+        if (collidesWithTank (tank)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+
+  }
+
+  private boolean collidesWithTank (Tank tank) {
+
+    if (tank.getRect ().intersects (this.getRect ())) {
+      stay ();
+      return true;
+    }
+    return false;
+  }
+
   private void stay () {
     this.x = lastX;
     this.y = lastY;
