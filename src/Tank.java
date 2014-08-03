@@ -9,6 +9,8 @@ public class Tank {
   public static final int  XSPEED = 5;
   public static final int  YSPEED = 5;
 
+  private boolean          good;
+
   private int              x, y;
   private boolean          bL     = false, bR = false, bU = false, bD = false;
 
@@ -31,21 +33,28 @@ public class Tank {
   private Direction ptDir = Direction.D;
 
   public Tank (int x,
-               int y) {
+               int y,
+               boolean good) {
     this.x = x;
     this.y = y;
+    this.good = good;
   }
 
   public Tank (int x,
                int y,
+               boolean good,
                TankClient tankClient) {
-    this (x, y);
+    this (x, y, good);
     this.tankClient = tankClient;
   }
 
   public void draw (Graphics g) {
     Color color = g.getColor ();
-    g.setColor (Color.RED);
+    if (good) {
+      g.setColor (Color.RED);
+    } else {
+      g.setColor (Color.BLUE);
+    }
     g.fillOval (x, y, WIDTH, HEIGHT);
     g.setColor (color);
 
