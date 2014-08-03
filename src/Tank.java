@@ -244,6 +244,9 @@ public class Tank {
       case KeyEvent.VK_CONTROL:
         fire ();
         break;
+      case KeyEvent.VK_A:
+        supperfire ();
+        break;
 
       default:
         break;
@@ -252,13 +255,24 @@ public class Tank {
     locateDirection ();
   }
 
+  private void supperfire () {
+    for (int i = 0; i < 8; i++) {
+      fireToDirection (Direction.values ()[i]);
+    }
+
+  }
+
   public Missile fire () {
+    return fireToDirection (ptDir);
+  }
+
+  private Missile fireToDirection (Direction d) {
     if (!live) {
       return null;
     }
     int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
     int y = this.y + Tank.HEIGHT / 2 - Missile.HEIGHT / 2;
-    Missile m = new Missile (x, y, good, ptDir, tankClient);
+    Missile m = new Missile (x, y, good, d, tankClient);
     tankClient.missiles.add (m);
     return m;
   }

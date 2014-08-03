@@ -38,8 +38,8 @@ public class TankClient extends Frame {
       enemies.add (new Tank (50 + i * 60, 60, false, Tank.Direction.D, this));
     }
 
-    walls.add (new Wall (100, 200, 20, 50, this));
-    walls.add (new Wall (300, 400, 50, 20, this));
+    walls.add (new Wall (100, 200, 20, 500, this));
+    walls.add (new Wall (200, 300, 200, 20, this));
 
   }
 
