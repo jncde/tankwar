@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 
 public class Tank {
@@ -11,6 +12,8 @@ public class Tank {
   public static final int  WIDTH                = 30;
   public static final int  XSPEED               = 5;
   public static final int  YSPEED               = 5;
+
+  private int              lastX, lastY;
 
   private boolean          good;
   private boolean          live                 = true;
@@ -45,6 +48,8 @@ public class Tank {
                Direction dir) {
     this.x = x;
     this.y = y;
+    this.lastX = x;
+    this.lastY = y;
     this.good = good;
     this.dir = dir;
   }
@@ -102,6 +107,9 @@ public class Tank {
         break;
 
     }
+
+    lastX = x;
+    lastY = y;
 
     move ();
   }
@@ -253,6 +261,37 @@ public class Tank {
     Missile m = new Missile (x, y, good, ptDir, tankClient);
     tankClient.missiles.add (m);
     return m;
+  }
+
+  public boolean collideWithWall (Wall w) {
+
+    if (this.live & this.getRect ().intersects (w.getRect ())) {
+      stay ();
+      return true;
+    }
+    return false;
+  }
+
+  public boolean collideWithWalls (List<Wall> walls) {
+
+    if (!this.live) {
+      return false;
+    }
+
+    for (int i = 0; i < walls.size (); i++) {
+      if (collideWithWall (walls.get (i))) {
+        return true;
+      }
+
+    }
+
+    return false;
+
+  }
+
+  private void stay () {
+    this.x = lastX;
+    this.y = lastY;
   }
 
   public Rectangle getRect () {
