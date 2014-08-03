@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Tank {
@@ -10,6 +11,7 @@ public class Tank {
   public static final int  YSPEED = 5;
 
   private boolean          good;
+  private boolean          live   = true;
 
   private int              x, y;
   private boolean          bL     = false, bR = false, bU = false, bD = false;
@@ -49,6 +51,10 @@ public class Tank {
   }
 
   public void draw (Graphics g) {
+
+    if (!live) {
+      return;
+    }
     Color color = g.getColor ();
     if (good) {
       g.setColor (Color.RED);
@@ -215,4 +221,17 @@ public class Tank {
     tankClient.missiles.add (m);
     return m;
   }
+
+  public Rectangle getRect () {
+    return new Rectangle (x, y, WIDTH, HEIGHT);
+  }
+
+  public void setLive (boolean live) {
+    this.live = live;
+  }
+
+  public boolean isLive () {
+    return live;
+  }
+
 }

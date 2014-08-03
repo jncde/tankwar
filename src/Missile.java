@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Missile {
 
@@ -32,6 +33,11 @@ public class Missile {
   }
 
   public void draw (Graphics g) {
+    if (!live) {
+      tankClient.missiles.remove (this);
+      return;
+    }
+
     Color c = g.getColor ();
     g.setColor (Color.BLACK);
     g.fillOval (x, y, HEIGHT, WIDTH);
@@ -74,12 +80,26 @@ public class Missile {
 
     if (x < 0 || y < 0 || x > TankClient.GAME_WIDTH || y > TankClient.GAME_HEIGHT) {
       live = false;
-      tankClient.missiles.remove (this);
+
     }
   }
 
   public boolean isLive () {
     return live;
+  }
+
+  public Rectangle getRect () {
+    return new Rectangle (x, y, WIDTH, HEIGHT);
+  }
+
+  public boolean hitTank (Tank t) {
+
+    if (this.getRect ().intersects (t.getRect ()) && t.isLive ()) {
+      t.setLive (false);
+      live = false;
+      return true;
+    }
+    return false;
   }
 
 }
