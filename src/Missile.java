@@ -99,7 +99,7 @@ public class Missile {
 
   public boolean hitTank (Tank t) {
 
-    if (this.good != t.isGood () && this.getRect ().intersects (t.getRect ()) && t.isLive ()) {
+    if (this.live && this.good != t.isGood () && this.getRect ().intersects (t.getRect ()) && t.isLive ()) {
       t.setLive (false);
       live = false;
       tankClient.explodes.add (new Explode (x, y, true, tankClient));
@@ -122,4 +122,23 @@ public class Missile {
 
   }
 
+  public boolean hitWall (Wall w) {
+    if (this.live && this.getRect ().intersects (w.getRect ())) {
+      this.live = false;
+      tankClient.missiles.remove (this);
+      return true;
+    }
+    return false;
+  }
+
+  public boolean hitWalls (List<Wall> walls) {
+
+    for (int i = 0; i < walls.size (); i++) {
+      if (hitWall (walls.get (i))) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }

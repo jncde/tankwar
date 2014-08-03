@@ -22,6 +22,7 @@ public class TankClient extends Frame {
   List<Missile>             missiles         = new ArrayList<Missile> ();
   List<Explode>             explodes         = new ArrayList<Explode> ();
   List<Tank>                enemies          = new ArrayList<Tank> ();
+  List<Wall>                walls            = new ArrayList<Wall> ();
 
   Image                     offScreenImage   = null;
 
@@ -29,6 +30,16 @@ public class TankClient extends Frame {
 
     TankClient tankClient = new TankClient ();
     tankClient.lauchFrame ();
+
+  }
+
+  public TankClient () {
+    for (int i = 0; i < 10; i++) {
+      enemies.add (new Tank (50 + i * 10, 50 + i * 10, false, Tank.Direction.D, this));
+    }
+
+    walls.add (new Wall (100, 200, 20, 50, this));
+    walls.add (new Wall (300, 400, 50, 20, this));
 
   }
 
@@ -50,10 +61,6 @@ public class TankClient extends Frame {
     this.setBackground (Color.GREEN);
     this.addKeyListener (new KeyMonitor ());
 
-    for (int i = 0; i < 50; i++) {
-      enemies.add (new Tank (50 + i * 10, 50 + i * 10, false, Tank.Direction.D, this));
-
-    }
     setVisible (true);
     new Thread (new PaintThread ()).start ();
   }
@@ -76,7 +83,12 @@ public class TankClient extends Frame {
       //      missile.hitTank (enemyTank);
       missile.hitTanks (enemies);
       missile.hitTank (myTank);
+      missile.hitWalls (walls);
 
+    }
+
+    for (int i = 0; i < walls.size (); i++) {
+      walls.get (i).draw (g);
     }
 
     for (int i = 0; i < explodes.size (); i++) {
