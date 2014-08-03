@@ -11,13 +11,17 @@ import java.util.List;
 
 public class TankClient extends Frame {
 
-  private static final int HEIGHT         = 600;
-  private static final int WIDTH          = 800;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+  public static final int   GAME_HEIGHT      = 600;
+  public static final int   GAME_WIDTH       = 800;
 
-  Tank                     myTank         = new Tank (50, 50, this);
-  List<Missile>            missiles       = new ArrayList<Missile> ();
+  Tank                      myTank           = new Tank (50, 50, this);
+  List<Missile>             missiles         = new ArrayList<Missile> ();
 
-  Image                    offScreenImage = null;
+  Image                     offScreenImage   = null;
 
   public static void main (String[] args) {
 
@@ -28,7 +32,7 @@ public class TankClient extends Frame {
 
   public void lauchFrame () {
     this.setLocation (400, 300);
-    this.setSize (800, 600);
+    this.setSize (GAME_WIDTH, GAME_HEIGHT);
 
     this.addWindowListener (new WindowAdapter () {
 
@@ -62,12 +66,12 @@ public class TankClient extends Frame {
   @Override
   public void update (Graphics g) {
     if (offScreenImage == null) {
-      offScreenImage = this.createImage (WIDTH, HEIGHT);
+      offScreenImage = this.createImage (GAME_WIDTH, GAME_HEIGHT);
     }
     Graphics offG = offScreenImage.getGraphics ();
     Color c = offG.getColor ();
     offG.setColor (Color.GREEN);
-    offG.fillRect (0, 0, WIDTH, HEIGHT);
+    offG.fillRect (0, 0, GAME_WIDTH, GAME_WIDTH);
     offG.setColor (c);
     paint (offG);
 
