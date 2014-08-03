@@ -7,6 +7,14 @@ import java.util.Random;
 
 public class Tank {
 
+  public int getLife () {
+    return life;
+  }
+
+  public void setLife (int life) {
+    this.life = life;
+  }
+
   private static final int FIRE_RANDOM_INTERVAL = 50;
   public static final int  HEIGHT               = 30;
   public static final int  WIDTH                = 30;
@@ -16,13 +24,15 @@ public class Tank {
   private int              lastX, lastY;
 
   private boolean          good;
-  private boolean          live                 = true;
+  private boolean          alive                = true;
 
   private int              x, y;
   private boolean          bL                   = false, bR = false, bU = false, bD = false;
 
   private TankClient       tankClient;
   private int              step                 = random.nextInt (12) + 3;
+
+  private int              life;
 
   public enum Direction {
     L,
@@ -45,27 +55,30 @@ public class Tank {
   public Tank (int x,
                int y,
                boolean good,
-               Direction dir) {
+               Direction dir,
+               int life) {
     this.x = x;
     this.y = y;
     this.lastX = x;
     this.lastY = y;
     this.good = good;
     this.dir = dir;
+    this.life = life;
   }
 
   public Tank (int x,
                int y,
                boolean good,
                Direction dir,
+               int life,
                TankClient tankClient) {
-    this (x, y, good, dir);
+    this (x, y, good, dir, life);
     this.tankClient = tankClient;
   }
 
   public void draw (Graphics g) {
 
-    if (!live) {
+    if (!alive) {
       if (!good) {
         tankClient.enemies.remove (this);
       }
@@ -78,6 +91,7 @@ public class Tank {
       g.setColor (Color.BLUE);
     }
     g.fillOval (x, y, WIDTH, HEIGHT);
+    g.drawString ("life:" + this.getLife (), x, y);
     g.setColor (color);
 
     switch (ptDir) {
@@ -267,7 +281,7 @@ public class Tank {
   }
 
   private Missile fireToDirection (Direction d) {
-    if (!live) {
+    if (!alive) {
       return null;
     }
     int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
@@ -279,7 +293,7 @@ public class Tank {
 
   public boolean collideWithWall (Wall w) {
 
-    if (this.live & this.getRect ().intersects (w.getRect ())) {
+    if (this.alive & this.getRect ().intersects (w.getRect ())) {
       stay ();
       return true;
     }
@@ -288,7 +302,7 @@ public class Tank {
 
   public boolean collideWithWalls (List<Wall> walls) {
 
-    if (!this.live) {
+    if (!this.alive) {
       return false;
     }
 
@@ -305,7 +319,7 @@ public class Tank {
 
   public boolean collidesWithTanks (List<Tank> tanks) {
 
-    if (!this.live) {
+    if (!this.alive) {
       return false;
     }
     for (Tank tank: tanks) {
@@ -338,12 +352,12 @@ public class Tank {
     return new Rectangle (x, y, WIDTH, HEIGHT);
   }
 
-  public void setLive (boolean live) {
-    this.live = live;
+  public void setAlive (boolean alive) {
+    this.alive = alive;
   }
 
-  public boolean isLive () {
-    return live;
+  public boolean isAlive () {
+    return alive;
   }
 
   public int getX () {
