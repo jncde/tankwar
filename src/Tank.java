@@ -5,18 +5,18 @@ import java.awt.event.KeyEvent;
 
 public class Tank {
 
-  private static final int HEIGHT = 30;
-  private static final int WIDTH  = 30;
-  public static final int  XSPEED = 5;
-  public static final int  YSPEED = 5;
+  public static final int HEIGHT = 30;
+  public static final int WIDTH  = 30;
+  public static final int XSPEED = 5;
+  public static final int YSPEED = 5;
 
-  private boolean          good;
-  private boolean          live   = true;
+  private boolean         good;
+  private boolean         live   = true;
 
-  private int              x, y;
-  private boolean          bL     = false, bR = false, bU = false, bD = false;
+  private int             x, y;
+  private boolean         bL     = false, bR = false, bU = false, bD = false;
 
-  private TankClient       tankClient;
+  private TankClient      tankClient;
 
   public enum Direction {
     L,
@@ -236,6 +236,14 @@ public class Tank {
 
   public boolean isLive () {
     return live;
+  }
+
+  public int getX () {
+    return x;
+  }
+
+  public int getY () {
+    return y;
   }
 
 }
