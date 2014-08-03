@@ -20,7 +20,7 @@ public class Tank {
   public static final int  WIDTH                = 30;
   public static final int  XSPEED               = 5;
   public static final int  YSPEED               = 5;
-
+  private final int        initLife;
   private int              lastX, lastY;
 
   private boolean          good;
@@ -33,6 +33,7 @@ public class Tank {
   private int              step                 = random.nextInt (12) + 3;
 
   private int              life;
+  private final BloodBar   bb;
 
   public enum Direction {
     L,
@@ -64,6 +65,10 @@ public class Tank {
     this.good = good;
     this.dir = dir;
     this.life = life;
+    initLife = life;
+
+    bb = new BloodBar (good ? Color.RED : Color.BLUE);
+
   }
 
   public Tank (int x,
@@ -91,7 +96,7 @@ public class Tank {
       g.setColor (Color.BLUE);
     }
     g.fillOval (x, y, WIDTH, HEIGHT);
-    g.drawString ("life:" + this.getLife (), x, y);
+    bb.draw (g);
     g.setColor (color);
 
     switch (ptDir) {
@@ -370,6 +375,25 @@ public class Tank {
 
   public boolean isGood () {
     return good;
+  }
+
+  private class BloodBar {
+
+    private final Color bbColor;
+
+    public BloodBar (Color bbColor) {
+      this.bbColor = bbColor;
+    }
+
+    public void draw (Graphics g) {
+      Color c = g.getColor ();
+      g.setColor (bbColor);
+      g.drawRect (x, y - 15, WIDTH, 10);
+      int w = WIDTH * life / initLife;
+      g.fillRect (x, y - 15, w, 10);
+      g.setColor (c);
+    }
+
   }
 
 }
