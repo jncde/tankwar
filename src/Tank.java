@@ -216,6 +216,9 @@ public class Tank {
       case KeyEvent.VK_DOWN:
         bD = true;
         break;
+      case KeyEvent.VK_F2:
+        tankClient.recreateMyTank ();
+        break;
 
     }
 

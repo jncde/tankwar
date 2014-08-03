@@ -11,14 +11,18 @@ import java.util.List;
 
 public class TankClient extends Frame {
 
+  private static int        tankslife        = 5;
+  private static final int  PLAYER_TANKSLIFE = 100;
+  private static int        rund             = 1;
   /**
    * 
    */
   private static final long serialVersionUID = 1L;
   public static final int   GAME_HEIGHT      = 600;
   public static final int   GAME_WIDTH       = 800;
+  int                       enemyTankNumber;
 
-  Tank                      myTank           = new Tank (500, 750, true, Tank.Direction.STOP, 100, this);
+  Tank                      myTank           = new Tank (500, 750, true, Tank.Direction.STOP, PLAYER_TANKSLIFE, this);
   List<Missile>             missiles         = new ArrayList<Missile> ();
   List<Explode>             explodes         = new ArrayList<Explode> ();
   List<Tank>                enemies          = new ArrayList<Tank> ();
@@ -36,13 +40,26 @@ public class TankClient extends Frame {
   }
 
   public TankClient () {
-    for (int i = 0; i < 10; i++) {
-      enemies.add (new Tank (50 + i * 60, 60, false, Tank.Direction.D, 100, this));
-    }
 
+    createEnemies ();
     walls.add (new Wall (100, 200, 20, 500, this));
     walls.add (new Wall (200, 300, 200, 20, this));
 
+  }
+
+  private void createEnemies () {
+    enemyTankNumber = (int) Math.pow (2, rund);
+    int yPosition = 60;
+    for (int i = 0; i < enemyTankNumber; i++) {
+      int xposition = 50 + i * 50;
+      if (xposition > GAME_WIDTH) {
+        xposition = xposition - GAME_WIDTH;
+        yPosition += 50;
+      }
+
+      enemies.add (new Tank (xposition, yPosition, false, Tank.Direction.D, 100, this));
+    }
+    rund++;
   }
 
   public void lauchFrame () {
@@ -72,7 +89,8 @@ public class TankClient extends Frame {
 
     g.drawString ("Missiles counts: " + missiles.size (), 10, 50);
     g.drawString ("Explodes counts: " + explodes.size (), 10, 70);
-    g.drawString ("Tank's life: " + myTank.getLife (), 10, 90);
+    g.drawString ("Player Tanks: " + tankslife, 10, 90);
+    g.drawString ("Rund: " + rund + " Enemies number:" + enemyTankNumber, 10, 110);
 
     blood.draw (g);
     myTank.draw (g);
@@ -130,6 +148,10 @@ public class TankClient extends Frame {
       while (true) {
         //        System.out.println ("PaintThread print-----y: " + y);
         repaint ();
+
+        if (enemies.size () == 0) {
+          createEnemies ();
+        }
         try {
           Thread.sleep (50);
         } catch (InterruptedException e) {
@@ -152,6 +174,15 @@ public class TankClient extends Frame {
     @Override
     public void keyReleased (KeyEvent e) {
       myTank.keyReleased (e);
+    }
+
+  }
+
+  public void recreateMyTank () {
+    if (tankslife > 0) {
+      tankslife--;
+      myTank.setAlive (true);
+      myTank.setLife (PLAYER_TANKSLIFE);
     }
 
   }
