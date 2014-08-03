@@ -22,6 +22,7 @@ public class TankClient extends Frame {
   Tank                      enemyTank        = new Tank (50, 50, false, this);
   List<Missile>             missiles         = new ArrayList<Missile> ();
   List<Explode>             explodes         = new ArrayList<Explode> ();
+  List<Tank>                enemies          = new ArrayList<Tank> ();
 
   Image                     offScreenImage   = null;
 
@@ -49,6 +50,11 @@ public class TankClient extends Frame {
     this.setResizable (false);
     this.setBackground (Color.GREEN);
     this.addKeyListener (new KeyMonitor ());
+
+    for (int i = 0; i < 50; i++) {
+      enemies.add (new Tank (50 + i * 10, 50 + i * 10, false, this));
+
+    }
     setVisible (true);
     new Thread (new PaintThread ()).start ();
   }
@@ -60,11 +66,16 @@ public class TankClient extends Frame {
     g.drawString ("Explodes counts: " + explodes.size (), 10, 70);
 
     myTank.draw (g);
-    enemyTank.draw (g);
+
+    for (int i = 0; i < enemies.size (); i++) {
+      enemies.get (i).draw (g);
+    }
+
     for (int i = 0; i < missiles.size (); i++) {
       Missile missile = missiles.get (i);
       missile.draw (g);
-      missile.hitTank (enemyTank);
+      //      missile.hitTank (enemyTank);
+      missile.hitTanks (enemies);
 
     }
 

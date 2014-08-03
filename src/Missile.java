@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.List;
 
 public class Missile {
 
@@ -101,6 +102,20 @@ public class Missile {
       return true;
     }
     return false;
+  }
+
+  public boolean hitTanks (List<Tank> tanks) {
+
+    for (int i = 0; i < tanks.size (); i++) {
+      Tank tank = tanks.get (i);
+      if (hitTank (tank)) {
+        tanks.remove (tank);
+        return true;
+      }
+    }
+
+    return false;
+
   }
 
 }
