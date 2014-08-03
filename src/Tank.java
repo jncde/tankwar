@@ -377,6 +377,13 @@ public class Tank {
     return good;
   }
 
+  public void eat (Blood b) {
+    if (alive && b.isAlive () && this.getRect ().intersects (b.getRect ())) {
+      this.life = initLife;
+      b.setAlive (false);
+    }
+  }
+
   private class BloodBar {
 
     private final Color bbColor;

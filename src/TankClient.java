@@ -24,6 +24,8 @@ public class TankClient extends Frame {
   List<Tank>                enemies          = new ArrayList<Tank> ();
   List<Wall>                walls            = new ArrayList<Wall> ();
 
+  Blood                     blood            = new Blood ();
+
   Image                     offScreenImage   = null;
 
   public static void main (String[] args) {
@@ -72,13 +74,16 @@ public class TankClient extends Frame {
     g.drawString ("Explodes counts: " + explodes.size (), 10, 70);
     g.drawString ("Tank's life: " + myTank.getLife (), 10, 90);
 
+    blood.draw (g);
     myTank.draw (g);
+    myTank.eat (blood);
 
     for (int i = 0; i < enemies.size (); i++) {
       Tank tank = enemies.get (i);
       tank.draw (g);
       tank.collideWithWalls (walls);
       tank.collidesWithTanks (enemies);
+      tank.eat (blood);
     }
 
     for (int i = 0; i < missiles.size (); i++) {
