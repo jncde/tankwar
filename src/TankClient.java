@@ -50,8 +50,8 @@ public class TankClient extends Frame {
     this.setBackground (Color.GREEN);
     this.addKeyListener (new KeyMonitor ());
 
-    for (int i = 0; i < 50; i++) {
-      enemies.add (new Tank (50 + i * 10, 50 + i * 10, false, Tank.Direction.D, this));
+    for (int i = 0; i < 10; i++) {
+      enemies.add (new Tank (50 + i * 10, 60, false, Tank.Direction.D, this));
 
     }
     setVisible (true);

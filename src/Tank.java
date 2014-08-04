@@ -166,6 +166,9 @@ public class Tank {
 
     }
 
+    /**
+     * fire
+     */
     if (!good & random.nextInt (FIRE_RANDOM_INTERVAL) > 48) {
       fire ();
     }
