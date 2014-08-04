@@ -25,6 +25,8 @@ public class TankClient extends Frame {
 
   Image                     offScreenImage   = null;
 
+  NetClient                 nc               = new NetClient ();
+
   public static void main (String[] args) {
 
     TankClient tankClient = new TankClient ();
@@ -56,6 +58,9 @@ public class TankClient extends Frame {
     //    }
     setVisible (true);
     new Thread (new PaintThread ()).start ();
+
+    nc.connect ("127.0.0.1", TankServer.TCP_PORT);
+
   }
 
   @Override
