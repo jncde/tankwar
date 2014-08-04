@@ -21,28 +21,16 @@ public class Tank {
   private TankClient       tankClient;
   private int              step                 = random.nextInt (12) + 3;
 
-  public enum Direction {
-    L,
-    LU,
-    U,
-    RU,
-    R,
-    RD,
-    D,
-    LD,
-    STOP
-  };
+  private Dir              dir                  = Dir.STOP;
 
-  private Direction    dir    = Direction.STOP;
+  private Dir              ptDir                = Dir.D;
 
-  private Direction    ptDir  = Direction.D;
-
-  public static Random random = new Random ();
+  public static Random     random               = new Random ();
 
   public Tank (int x,
                int y,
                boolean good,
-               Direction dir) {
+               Dir dir) {
     this.x = x;
     this.y = y;
     this.good = good;
@@ -52,7 +40,7 @@ public class Tank {
   public Tank (int x,
                int y,
                boolean good,
-               Direction dir,
+               Dir dir,
                TankClient tankClient) {
     this (x, y, good, dir);
     this.tankClient = tankClient;
@@ -141,7 +129,7 @@ public class Tank {
 
     }
 
-    if (this.dir != Direction.STOP) {
+    if (this.dir != Dir.STOP) {
       this.ptDir = dir;
     }
 
@@ -159,7 +147,7 @@ public class Tank {
     }
 
     if (!good & step == 0) {
-      Direction[] dirs = Direction.values ();
+      Dir[] dirs = Dir.values ();
       int randomInt = random.nextInt (dirs.length);
       this.dir = dirs[randomInt];
       step = 5 + random.nextInt (12);
@@ -201,23 +189,23 @@ public class Tank {
 
   private void locateDirection () {
     if (bL && !bU && !bR && !bD) {
-      dir = Direction.L;
+      dir = Dir.L;
     } else if (bL && bU && !bR && !bD) {
-      dir = Direction.LU;
+      dir = Dir.LU;
     } else if (!bL && bU && !bR && !bD) {
-      dir = Direction.U;
+      dir = Dir.U;
     } else if (!bL && bU && bR && !bD) {
-      dir = Direction.RU;
+      dir = Dir.RU;
     } else if (!bL && !bU && bR && !bD) {
-      dir = Direction.R;
+      dir = Dir.R;
     } else if (!bL && !bU && bR && bD) {
-      dir = Direction.RD;
+      dir = Dir.RD;
     } else if (!bL && !bU && !bR && bD) {
-      dir = Direction.D;
+      dir = Dir.D;
     } else if (bL && !bU && !bR && bD) {
-      dir = Direction.LD;
+      dir = Dir.LD;
     } else if (!bL && !bU && !bR && !bD) {
-      dir = Direction.STOP;
+      dir = Dir.STOP;
     }
   }
 

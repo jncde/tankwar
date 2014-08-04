@@ -8,7 +8,7 @@ public class Missile {
   private static final int XSPEED = 10;
   private static final int YSPEED = 10;
   int                      x, y;
-  Tank.Direction           dir;
+  Dir                      dir;
 
   public static final int  HEIGHT = 10;
   public static final int  WIDTH  = 10;
@@ -21,7 +21,7 @@ public class Missile {
   public Missile (int x,
                   int y,
                   boolean good,
-                  Tank.Direction dir) {
+                  Dir dir) {
     this.x = x;
     this.y = y;
     this.dir = dir;
@@ -31,7 +31,7 @@ public class Missile {
   public Missile (int x,
                   int y,
                   boolean good,
-                  Tank.Direction dir,
+                  Dir dir,
                   TankClient tc) {
     this (x, y, good, dir);
     this.tankClient = tc;
