@@ -27,6 +27,8 @@ public class Tank {
 
   public static Random     random               = new Random ();
 
+  private Integer          id                   = null;
+
   public Tank (int x,
                int y,
                boolean good,
@@ -46,6 +48,14 @@ public class Tank {
     this.tankClient = tankClient;
   }
 
+  public Integer getId () {
+    return id;
+  }
+
+  public void setId (Integer id) {
+    this.id = id;
+  }
+
   public void draw (Graphics g) {
 
     if (!live) {
@@ -61,6 +71,11 @@ public class Tank {
       g.setColor (Color.BLUE);
     }
     g.fillOval (x, y, WIDTH, HEIGHT);
+
+    if (id != null) {
+      g.drawString ("ID: " + id, x, y - 10);
+    }
+
     g.setColor (color);
 
     switch (ptDir) {

@@ -25,7 +25,7 @@ public class TankClient extends Frame {
 
   Image                     offScreenImage   = null;
 
-  NetClient                 nc               = new NetClient ();
+  NetClient                 nc               = new NetClient (this);
 
   public static void main (String[] args) {
 
