@@ -56,6 +56,14 @@ public class Tank {
     this.id = id;
   }
 
+  public Dir getDir () {
+    return dir;
+  }
+
+  public void setDir (Dir dir) {
+    this.dir = dir;
+  }
+
   public void draw (Graphics g) {
 
     if (!live) {
@@ -203,6 +211,9 @@ public class Tank {
   }
 
   private void locateDirection () {
+
+    Dir oldDir = this.dir;
+
     if (bL && !bU && !bR && !bD) {
       dir = Dir.L;
     } else if (bL && bU && !bR && !bD) {
@@ -222,6 +233,12 @@ public class Tank {
     } else if (!bL && !bU && !bR && !bD) {
       dir = Dir.STOP;
     }
+
+    if (dir != oldDir) {
+      TankMoveMsg msg = new TankMoveMsg (id, dir);
+      tankClient.nc.send (msg);
+    }
+
   }
 
   public void keyReleased (KeyEvent e) {
